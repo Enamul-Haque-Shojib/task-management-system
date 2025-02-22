@@ -1,8 +1,5 @@
-// import ProfileSettings from "../pages/user/manageProfile/ProfileSettings";
+
 import UserDashboard from "../pages/user/userDashboard";
-
-// import ViewOrders from "../pages/user/viewOrders/ViewOrders";
-
 
 export const userPaths = [
     {
@@ -10,14 +7,5 @@ export const userPaths = [
       path: 'dashboard',
       element: <UserDashboard />,
     },
-    // {
-    //   name: 'View Orders',
-    //   path: 'view-orders',
-    //   element: <ViewOrders />,
-    // },
-    // {
-    //   name: 'Profile',
-    //   path: 'profile',
-    //   element: <ProfileSettings />,
-    // }
+  
   ];

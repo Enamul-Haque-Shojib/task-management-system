@@ -1,11 +1,15 @@
 /* eslint-disable no-unused-vars */
 
-import { EditOutlined, FullscreenOutlined,DeleteOutlined, UserOutlined, AntDesignOutlined, QuestionCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { EditOutlined, ExpandOutlined,DeleteOutlined, UserOutlined, QuestionCircleOutlined} from '@ant-design/icons';
 import { Avatar, Button, Card, message, Popconfirm, Tag, Tooltip } from 'antd';
 const { Meta } = Card;
 import { useState } from 'react';
 import { Modal } from 'antd';
 import { useDeleteTaskMutation } from '../../redux/admin/adminApi';
+import EditTaskModal from './modal/EditTaskModal';
+import DetailsTaskModel from './modal/DetailsTaskModel';
+
+
 
 const TaskCard = ({task}) => {
 
@@ -39,6 +43,7 @@ const TaskCard = ({task}) => {
 
 
   const editTaskModal = () => {
+
     setIsEditTaskModalOpen(true);
   };
 
@@ -60,9 +65,9 @@ const TaskCard = ({task}) => {
         }}
        
         actions={[
-          <FullscreenOutlined  key="fullscreen" type="primary" onClick={detailsTaskModal}/>,
-          // <EditOutlined key="edit" type="primary" onClick={editTaskModal}/>,
-          <Button  onClick={editTaskModal}   style={{border:'0'}}  key="edit"><EditOutlined  /></Button>,
+          <ExpandOutlined  key="fullscreen" type="primary" onClick={detailsTaskModal}/>,
+          <EditOutlined key="edit" type="primary" onClick={editTaskModal}/>,
+       
           <Popconfirm
           key="delete"
           title="Delete the task"
@@ -82,7 +87,7 @@ const TaskCard = ({task}) => {
             />
           }
         >
-          <Button onClick={()=>handleDeleteTask(_id)} danger style={{border:'0'}}  key="delete"><DeleteOutlined  /></Button>
+          <Button onClick={()=>handleDeleteTask(_id)} danger style={{border:'0', boxShadow: 'none'}}  key="delete"><DeleteOutlined  /></Button>
         </Popconfirm>
         ]}
       >
@@ -122,22 +127,10 @@ const TaskCard = ({task}) => {
       </Tooltip>
     </Avatar.Group>
         </div>
-        
+        <DetailsTaskModel open={isDetailsTaskModalOpen} onOk={detailsTaskOk} onCancel={detailsTaskCancel} id={_id}></DetailsTaskModel>
+        <EditTaskModal open={isEditTaskModalOpen} onOk={editTaskOk} onCancel={editTaskCancel} id={_id}></EditTaskModal>
       </Card>
 
-
-
-
-      <Modal title="Details Task" open={isDetailsTaskModalOpen} onOk={detailsTaskOk} onCancel={detailsTaskCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
-      <Modal title="Edit Task" open={isEditTaskModalOpen} onOk={editTaskOk} onCancel={editTaskCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
         </div>
     );
 };

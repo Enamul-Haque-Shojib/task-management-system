@@ -32,6 +32,7 @@ const siderStyle = {
   bottom: 0,
   scrollbarWidth: 'thin',
   scrollbarGutter: 'stable',
+  
 };
 
 const Sidebar = () => {

@@ -1,8 +1,8 @@
 import TaskCard from "../../components/dashboard/TaskCard";
 import { useGetAllTasksQuery } from "../../redux/task/taskApi";
 
-import React from 'react';
-import { Col, Divider, Row } from 'antd';
+import React, { useState } from 'react';
+import { Col,Row } from 'antd';
 
 const style = { background: '#0092ff', padding: '8px 0' };
 
@@ -11,6 +11,7 @@ const style = { background: '#0092ff', padding: '8px 0' };
 // // const socket = io("http://localhost:5000");
 
 const AllTasks = () => {
+
 
     const { data: taskData, refetch } = useGetAllTasksQuery(undefined);
 
@@ -27,10 +28,14 @@ const AllTasks = () => {
     //     };
     //   }, [refetch]);
 
+   
+
 
     return (
         <div>
+        
             <h1>All Tasks</h1>
+            
             <Row gutter={{ xs: 4, sm: 16, md: 24, lg: 32 }}>
             {
                 taskData?.data?.map((task) => (
@@ -43,6 +48,7 @@ const AllTasks = () => {
                 ))
             }
               </Row>
+             
         </div>
     );
 };
