@@ -14,7 +14,7 @@ const AllTasks = () => {
 
     const { data: taskData, refetch } = useGetAllTasksQuery(undefined);
 
-    console.log(taskData);
+    console.log(new Date(taskData?.data[0]?.createdAt).toLocaleDateString());
     // useEffect(() => {
     //     const handleTaskUpdate = () => {
     //       refetch();
