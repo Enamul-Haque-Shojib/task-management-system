@@ -1,5 +1,6 @@
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { TaskModel } from './Task.model';
 import { TaskServices } from './Task.services';
 
 
@@ -38,6 +39,7 @@ const getSingleTask = catchAsync(async (req, res) => {
 });
 const getAllTasks = catchAsync(async (req, res) => {
   const result = await TaskServices.getAllTasksFromDB(req.query);
+
   sendResponse(res, {
     statusCode: 200,
     success: true,

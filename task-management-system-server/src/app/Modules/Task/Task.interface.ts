@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 export type TTask = {
   title: string;
   description: string;
+  auth: Types.ObjectId;
  
   category: 'To Do' | 'In Progress' | 'Done' ;
 };

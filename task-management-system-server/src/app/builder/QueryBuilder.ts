@@ -11,6 +11,7 @@ class QueryBuilder<T> {
 
   search(searchableFields: string[]) {
     const search = this.query?.search;
+    console.log('===search>>>',searchableFields)
     if (search) {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map(
@@ -38,34 +39,55 @@ class QueryBuilder<T> {
 
 
 
-  filter() {
-    const queryObj = { ...this.query };
+  // filter() {
+  //   const queryObj = { ...this.query };
 
-    const excludeFields = ['searchTerm', 'sort', 'order', 'limit', 'page'];
+  //   const excludeFields = ['searchTerm', 'sort', 'order', 'limit', 'page'];
+  //   excludeFields.forEach((el) => delete queryObj[el]);
+
+  //   const filters: Record<string, unknown> = {};
+
+  //   // Special handling for `participants`
+   
+  //   if (queryObj.participants) {
+
+  //     const participants = Array.isArray(queryObj.participants)
+  //       ? queryObj.participants
+  //       : [queryObj.participants];
+
+  //     filters.$or = participants.map((participant) => ({
+  //       participants: { $regex: participant, $options: 'i' }, // Use $regex to perform partial matches
+  //     }));
+  //   }
+
+  //   // Add other filters
+    
+  //   Object.keys(queryObj).forEach((key) => {
+      
+  //     if (key !== 'participants') {
+        
+  //       filters[key] = queryObj[key];
+  //     }
+  //   });
+
+  //   // Apply filters to the query
+    
+  //   this.modelQuery = this.modelQuery.find(filters as FilterQuery<T>);
+
+  //   return this;
+  // }
+
+
+
+  filter() {
+    const queryObj = { ...this.query }; // copy
+
+    // Filtering
+    const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    const filters: Record<string, unknown> = {};
-
-    // Special handling for `participants`
-    if (queryObj.participants) {
-      const participants = Array.isArray(queryObj.participants)
-        ? queryObj.participants
-        : [queryObj.participants];
-
-      filters.$or = participants.map((participant) => ({
-        participants: { $regex: participant, $options: 'i' }, // Use $regex to perform partial matches
-      }));
-    }
-
-    // Add other filters
-    Object.keys(queryObj).forEach((key) => {
-      if (key !== 'participants') {
-        filters[key] = queryObj[key];
-      }
-    });
-
-    // Apply filters to the query
-    this.modelQuery = this.modelQuery.find(filters as FilterQuery<T>);
+    this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
 
     return this;
   }

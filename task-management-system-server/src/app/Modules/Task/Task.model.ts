@@ -15,7 +15,10 @@ const taskSchema = new Schema<TTask, TaskStaticModel>(
       type: String,
       required: true,
     },
-   
+   auth: {
+    type: Schema.Types.ObjectId,
+    ref: 'Auth',
+   },
     category: {
       type: String,
       enum: {
