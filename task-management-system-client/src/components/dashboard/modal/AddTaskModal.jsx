@@ -1,22 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { Button, Col, message, Modal, Row, Space, Typography } from 'antd';
+import { Avatar, Button, Col, message, Modal, Row, Space, Typography } from 'antd';
 import TaskForm from '../form/TaskForm';
 import TaskInput from '../form/TaskInput';
 import { useAddTaskMutation } from '../../../redux/admin/adminApi';
 import TaskTextArea from '../form/TaskTextArea';
 import TaskSelect from '../form/TaskSelect';
-
-const authMember = ['sdsg','sdfs','67b890e17d9e00041dd32981'];
-export const authOptions = authMember.map((member) => ({
-    value: member.toLowerCase(),
-    label: member,
-  }));
-  
+import { useGetAllUsersQuery } from '../../../redux/auth/authApi';
+import { UserOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const AddTaskModal = ({open, onOk, onCancel}) => {
 
    
+    const { data: userData, isLoading } = useGetAllUsersQuery(undefined);
+  
+    const authOptions = userData?.data?.map((member) => ({
+        value: member?._id?.toLowerCase(),
+        label: <><Avatar src={member?.authImgUrl} size={40} icon={<UserOutlined />} />  {member?.authName}</>
+      }));
 
     const [addTask] = useAddTaskMutation();
     
@@ -36,6 +37,7 @@ const AddTaskModal = ({open, onOk, onCancel}) => {
                 auth: data.auth,
           
             };
+            console.log(taskInfo);
             
             await addTask(taskInfo).unwrap();
             onOk()

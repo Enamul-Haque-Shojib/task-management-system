@@ -60,6 +60,7 @@ const TaskCard = ({task}) => {
     return (
         <div>
             <Card
+            
         style={{
           width: 300,
         }}
@@ -87,10 +88,12 @@ const TaskCard = ({task}) => {
             />
           }
         >
+          
           <Button onClick={()=>handleDeleteTask(_id)} danger style={{border:'0', boxShadow: 'none'}}  key="delete"><DeleteOutlined  /></Button>
         </Popconfirm>
         ]}
       >
+       
         <Meta 
         style={{
             height: 100,
@@ -127,8 +130,10 @@ const TaskCard = ({task}) => {
       </Tooltip>
     </Avatar.Group>
         </div>
+        
         <DetailsTaskModel open={isDetailsTaskModalOpen} onOk={detailsTaskOk} onCancel={detailsTaskCancel} id={_id}></DetailsTaskModel>
         <EditTaskModal open={isEditTaskModalOpen} onOk={editTaskOk} onCancel={editTaskCancel} id={_id}></EditTaskModal>
+      
       </Card>
 
         </div>

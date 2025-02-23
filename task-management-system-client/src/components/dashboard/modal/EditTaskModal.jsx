@@ -1,20 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { Button, message, Modal, Typography } from "antd";
+import { Avatar, Button, message, Modal, Typography } from "antd";
 import TaskForm from "../form/TaskForm";
 import TaskInput from "../form/TaskInput";
 import TaskTextArea from "../form/TaskTextArea";
 import TaskSelect from "../form/TaskSelect";
 import { useUpdateTaskMutation } from "../../../redux/admin/adminApi";
 import { useGetSingleTasksQuery } from "../../../redux/task/taskApi";
+import { UserOutlined } from '@ant-design/icons';
+import { useGetAllUsersQuery } from "../../../redux/auth/authApi";
 
-const authMember = ['sdsg','sdfs','67b890e17d9e00041dd32981'];
-export const authOptions = authMember.map((member) => ({
-    value: member.toLowerCase(),
-    label: member,
-  }));
 
 const { Title } = Typography;
 const EditTaskModal = ({open, onOk, onCancel, id}) => {
+    const { data: userData } = useGetAllUsersQuery(undefined);
+  
+    const authOptions = userData?.data?.map((member) => ({
+        value: member?._id?.toLowerCase(),
+        label: <><Avatar src={member?.authImgUrl} size={40} icon={<UserOutlined />} />  {member?.authName}</>
+      }));
     const [updateTask] = useUpdateTaskMutation();
     const { data: getSingleTask, isLoading } = useGetSingleTasksQuery(id);
 

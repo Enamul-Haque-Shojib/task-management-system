@@ -28,7 +28,7 @@ const DashboardLayout = () => {
           <div
             style={{
               padding: 24,
-            
+              height: '100%',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}

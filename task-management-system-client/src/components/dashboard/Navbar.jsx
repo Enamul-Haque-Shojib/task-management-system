@@ -3,21 +3,25 @@ import { Avatar, Button, Divider, Modal, Popover, Space, Tooltip } from 'antd';
 import { Layout, theme } from 'antd';
 import { useState } from 'react';
 import AddTaskModal from './modal/AddTaskModal';
+import useAuth from '../../hooks/useAuth';
 const { Header } = Layout;
 const Navbar = () => {
 
+  const { logOut, role, user } = useAuth();
+  console.log(role)
+  // const [modal, contextHolder] = Modal.useModal();
 
-  const [modal, contextHolder] = Modal.useModal();
-
-  const confirm = () => {
-    modal.confirm({
-      title: 'Confirm',
-      icon: <ExclamationCircleOutlined />,
-      content: 'Bla bla ...',
-      okText: '确认',
-      cancelText: '取消',
-    });
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        localStorage.removeItem("ParcelManagementSystemToken");
+      })
+      .catch(() => {
+        // Handle log out error if needed
+      });
   };
+
+ 
     
     const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
     const {
@@ -26,11 +30,17 @@ const Navbar = () => {
 
       const content = (
         <div style={{width:100}}>
-          <h3>Jack Era</h3>
-          <p>Admin</p>
+          <h3>{user?.displayName}</h3>
+          <p>{role}</p>
           <p>Profile</p>
           <Divider style={{margin:0}}></Divider>
-          <Button style={{border: 0, boxShadow: 'none', padding:0}} danger>Logout</Button>
+          <Button 
+          style={{border: 0, boxShadow: 'none', padding:0}} 
+          danger
+          onClick={handleLogOut}
+          >
+            Logout
+          </Button>
         </div>
       );
 

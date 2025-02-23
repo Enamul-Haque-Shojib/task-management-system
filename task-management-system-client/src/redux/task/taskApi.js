@@ -37,7 +37,11 @@
 import { baseApi } from "../api/baseApi";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:5000", {
+  transports: ["websocket", "polling"], 
+  reconnectionAttempts: 5, 
+  reconnectionDelay: 3000, 
+});
 
 const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -49,27 +53,48 @@ const taskApi = baseApi.injectEndpoints({
       providesTags: ["Tasks"],
       async onCacheEntryAdded(_, { updateCachedData, cacheDataLoaded, cacheEntryRemoved, dispatch }) {
         try {
-          await cacheDataLoaded;
-
-          const handleTaskUpdate = () => {
-            dispatch(taskApi.util.invalidateTags(["Tasks"])); // Forces a refetch
-          };
-
-          socket.on("taskUpdated", handleTaskUpdate);
-
-          await cacheEntryRemoved;
-          socket.off("taskUpdated", handleTaskUpdate);
+            await cacheDataLoaded;
+    
+            const handleTaskUpdate = () => {
+                dispatch(taskApi.util.invalidateTags(["Tasks"])); // Force a refetch on update
+            };
+    
+            if (!socket.hasListeners("taskUpdated")) {  // Prevent duplicate listeners
+                socket.on("taskUpdated", handleTaskUpdate);
+            }
+    
+            await cacheEntryRemoved;
+            socket.off("taskUpdated", handleTaskUpdate);
         } catch (error) {
-          console.error("WebSocket error:", error);
+            console.error("WebSocket error:", error);
         }
-      },
+    }
+    
     }),
-    getAllQueryTasks: builder.mutation({
+    getAllQueryTasks: builder.query({
       query: (category) => ({
         url: `/tasks?category=${category}`,
         method: "GET",
       }),
-      invalidatesTags: ["Tasks"],
+      providesTags: ["Tasks"],
+      async onCacheEntryAdded(_, { updateCachedData, cacheDataLoaded, cacheEntryRemoved, dispatch }) {
+        try {
+            await cacheDataLoaded;
+    
+            const handleTaskUpdate = () => {
+                dispatch(taskApi.util.invalidateTags(["Tasks"])); // Force a refetch on update
+            };
+    
+            if (!socket.hasListeners("taskUpdated")) {  // Prevent duplicate listeners
+                socket.on("taskUpdated", handleTaskUpdate);
+            }
+    
+            await cacheEntryRemoved;
+            socket.off("taskUpdated", handleTaskUpdate);
+        } catch (error) {
+            console.error("WebSocket error:", error);
+        }
+    }
     }),
     getSingleTasks: builder.query({
       query: (id) => ({
@@ -81,7 +106,7 @@ const taskApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllTasksQuery, useGetSingleTasksQuery, useGetAllQueryTasksMutation } = taskApi;
+export const { useGetAllTasksQuery, useGetSingleTasksQuery, useGetAllQueryTasksQuery } = taskApi;
 
 
 

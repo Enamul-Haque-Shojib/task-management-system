@@ -13,6 +13,12 @@ import {
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQuery,
-    tagTypes: ['Tasks'],
+    tagTypes: ['Tasks', 'Users'],
+    endpoints: () => ({}),
+  });
+
+  export const imageUploadBaseApi = createApi({
+    reducerPath: 'imageUploadApi',
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://api.cloudinary.com/v1_1' }),
     endpoints: () => ({}),
   });
