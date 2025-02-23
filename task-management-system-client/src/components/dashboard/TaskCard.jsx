@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { EditOutlined, ExpandOutlined,DeleteOutlined, UserOutlined, QuestionCircleOutlined} from '@ant-design/icons';
+import { EditOutlined, ExpandOutlined,DeleteOutlined, UserOutlined, QuestionCircleOutlined, CheckOutlined, ArrowRightOutlined} from '@ant-design/icons';
 import { Avatar, Button, Card, message, Popconfirm, Tag, Tooltip } from 'antd';
 const { Meta } = Card;
 import { useState } from 'react';
@@ -8,14 +8,17 @@ import { Modal } from 'antd';
 import { useDeleteTaskMutation } from '../../redux/admin/adminApi';
 import EditTaskModal from './modal/EditTaskModal';
 import DetailsTaskModel from './modal/DetailsTaskModel';
+import useAuth from '../../hooks/useAuth';
 
 
 
 const TaskCard = ({task}) => {
+  const {role, user} = useAuth()
 
   const [deleteTask] = useDeleteTaskMutation();
 
     const {_id,title, description, category, auth, createdAt} = task;
+    const cardEmail = auth?.email;
 
     const [isDetailsTaskModalOpen, setIsDetailsTaskModalOpen] = useState(false);
     const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
@@ -55,6 +58,47 @@ const TaskCard = ({task}) => {
     setIsEditTaskModalOpen(false);
   };
 
+  let actionList=[];
+  if(role === "Admin"){
+      actionList=[
+        <ExpandOutlined  key="fullscreen" type="primary" onClick={detailsTaskModal}/>,
+        
+        <EditOutlined key="edit" type="primary" onClick={editTaskModal}/>,
+     
+       <Popconfirm
+        key="delete"
+        title="Delete the task"
+        description="Are you sure to delete this task?"
+        icon={
+          <QuestionCircleOutlined
+            style={{
+              color: 'red',
+            }}
+            // okButtonProps={{
+            //   loading: confirmLoading,
+            // }}
+            // onConfirm={()=>handleDeleteTask(_id)}
+           
+            // okText="Yes"
+            // cancelText="No"
+          />
+        }
+      >
+        
+        <Button onClick={()=>handleDeleteTask(_id)} danger style={{border:'0', boxShadow: 'none', margin:0}}  key="delete"><DeleteOutlined  /></Button>
+      </Popconfirm>,
+     
+      ]
+  }else if (role==="User"){
+    actionList=[
+      <ExpandOutlined  key="fullscreen" type="primary" onClick={detailsTaskModal}/>,
+      
+    cardEmail==user.email && <Button key="start" disabled={category==="In Progress"} style={{border:'0', boxShadow: 'none', margin:0}}><ArrowRightOutlined /></Button>,
+
+    cardEmail==user.email && <Button key="complete" disabled={category==="Done"} style={{border:'0', boxShadow: 'none', margin:0}}><CheckOutlined /></Button>
+    ]
+  }
+
 
 
     return (
@@ -65,33 +109,7 @@ const TaskCard = ({task}) => {
           width: 300,
         }}
        
-        actions={[
-          <ExpandOutlined  key="fullscreen" type="primary" onClick={detailsTaskModal}/>,
-          <EditOutlined key="edit" type="primary" onClick={editTaskModal}/>,
-       
-          <Popconfirm
-          key="delete"
-          title="Delete the task"
-          description="Are you sure to delete this task?"
-          icon={
-            <QuestionCircleOutlined
-              style={{
-                color: 'red',
-              }}
-              // okButtonProps={{
-              //   loading: confirmLoading,
-              // }}
-              // onConfirm={()=>handleDeleteTask(_id)}
-             
-              // okText="Yes"
-              // cancelText="No"
-            />
-          }
-        >
-          
-          <Button onClick={()=>handleDeleteTask(_id)} danger style={{border:'0', boxShadow: 'none'}}  key="delete"><DeleteOutlined  /></Button>
-        </Popconfirm>
-        ]}
+        actions={actionList}
       >
        
         <Meta 

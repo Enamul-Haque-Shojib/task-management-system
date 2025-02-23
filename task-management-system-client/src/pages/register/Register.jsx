@@ -81,7 +81,7 @@ const Register = () => {
 
     return (
         <div>
-            <Title level={2} style={{ textAlign: 'center' }}>Add Task</Title>
+            <Title level={2} style={{ textAlign: 'center' }}>Sign UP</Title>
             <div></div>
             <div>
             <TaskForm onSubmit={onSubmit} defaultValues={defaultValues}>
@@ -110,7 +110,7 @@ const Register = () => {
          <p className="text-center mt-6 text-gray-600">
               Already have an account?{" "}
               <Link
-                to="/login"
+                to="/"
                 className="text-green-600 font-semibold hover:underline"
               >
                 Login

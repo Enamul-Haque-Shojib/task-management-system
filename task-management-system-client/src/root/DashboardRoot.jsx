@@ -1,13 +1,14 @@
 
-// import ProtectedRoutes from '../layout/ProtectedRoutes';
+
 import DashboardLayout from '../layout/DashboardLayout';
+import ProtectedRoutes from '../routes/ProtectedRoutes';
 
 const DashboardRoot = () => {
     return (
         <div>
-             {/* <ProtectedRoutes role={undefined}> */}
+             <ProtectedRoutes>
             <DashboardLayout></DashboardLayout>
-            {/* </ProtectedRoutes> */}
+            </ProtectedRoutes>
         </div>
     );
 };

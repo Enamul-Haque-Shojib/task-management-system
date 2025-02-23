@@ -3,6 +3,7 @@ import { Layout, Menu, Typography } from 'antd';
 import { adminPaths } from '../../routes/admin.routes';
 import { userPaths } from '../../routes/user.routes';
 import sidebarItemsGenerator from '../../utils/sidebarItemsGenerator';
+import useAuth from '../../hooks/useAuth';
 // import { sidebarItemsGenerator } from '../../utils/sidebarItemsGenerator';
 // import { adminPaths } from '../../routes/admin.routes';
 // import { userPaths } from '../../routes/user.routes';
@@ -18,8 +19,8 @@ const { Title } = Typography;
 
 
 const userRole = {
-    ADMIN: 'admin',
-    USER: 'user'
+    ADMIN: 'Admin',
+    USER: 'User'
 };
 
 
@@ -36,14 +37,9 @@ const siderStyle = {
 };
 
 const Sidebar = () => {
-    // const token = useAppSelector(currentToken);
-    // let auth = null;
+    const {role} = useAuth()
 
-    // if (token) {
-    //     auth = verifyToken(token);
-    // }
-
-    const auth = {role: 'admin'}
+    const auth = {role}
 
     let sidebarItems = [];
 

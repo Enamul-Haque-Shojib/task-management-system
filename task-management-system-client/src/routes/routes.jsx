@@ -4,11 +4,12 @@ import {
 } from "react-router-dom";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
-// import ProtectedRoutes from "../layout/ProtectedRoutes";
+
 import DashboardRoot from "../root/DashboardRoot";
 import { routeGenerator } from "../utils/routeGenerator";
 import { adminPaths } from "./admin.routes";
 import { userPaths } from "./user.routes";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 
 
@@ -28,18 +29,18 @@ export const router = createBrowserRouter([
     {
       path: '/Admin',
       element: (
-        // <ProtectedRoutes role="admin">
+        <ProtectedRoutes>
           <DashboardRoot />
-        //  </ProtectedRoutes>
+        </ProtectedRoutes>
       ),
       children: routeGenerator(adminPaths),
     },
     {
       path: '/User',
       element: (
-        // <ProtectedRoutes role="user">
+        <ProtectedRoutes>
           <DashboardRoot />
-        //  </ProtectedRoutes>
+        </ProtectedRoutes>
       ),
       children: routeGenerator(userPaths),
     },

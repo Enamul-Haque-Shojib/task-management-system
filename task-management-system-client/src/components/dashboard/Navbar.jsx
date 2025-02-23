@@ -5,16 +5,20 @@ import { useState } from 'react';
 import AddTaskModal from './modal/AddTaskModal';
 import useAuth from '../../hooks/useAuth';
 const { Header } = Layout;
+import { useNavigate, Navigate, useLocation, Link } from "react-router-dom";
+import { useGetAllUsersQuery } from '../../redux/auth/authApi';
 const Navbar = () => {
-
+const navigate = useNavigate();
   const { logOut, role, user } = useAuth();
-  console.log(role)
-  // const [modal, contextHolder] = Modal.useModal();
+
+  
+  const { data: userData } = useGetAllUsersQuery(user?.email);
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
         localStorage.removeItem("ParcelManagementSystemToken");
+        navigate('/')
       })
       .catch(() => {
         // Handle log out error if needed
@@ -32,7 +36,6 @@ const Navbar = () => {
         <div style={{width:100}}>
           <h3>{user?.displayName}</h3>
           <p>{role}</p>
-          <p>Profile</p>
           <Divider style={{margin:0}}></Divider>
           <Button 
           style={{border: 0, boxShadow: 'none', padding:0}} 
@@ -81,29 +84,25 @@ const Navbar = () => {
                 style: { color: '#f56a00', backgroundColor: '#fde3cf' },
               }}
             >
-                <Tooltip title='Michel Jasi' placement="top">
-                    <Avatar src='https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg'  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+             {
+              userData?.data.map((member) =>(
+                <Tooltip key={member._id} title={member.authName} placement="top">
+                    <Avatar src={member.authImgUrl} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                 </Tooltip>
-                <Tooltip title='Michel Jasi' placement="top">
-                    <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL9HaaTJSDJsT4iNusqiWXnEUelnan5lADZQ&s'  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                </Tooltip>
-                <Tooltip title='Michel Jasi' placement="top">
-                    <Avatar src='https://img.freepik.com/free-photo/lifestyle-people-emotions-casual-concept-confident-nice-smiling-asian-woman-cross-arms-chest-confident-ready-help-listening-coworkers-taking-part-conversation_1258-59335.jpg'  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                </Tooltip>
-                <Tooltip title='Michel Jasi' placement="top">
-                    <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAe9NZZk7nUE_anJir2Scf7tsqMHRdEpCbJg&s'  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                </Tooltip>
-                <Tooltip title='Michel Jasi' placement="top">
-                    <Avatar src='https://media.istockphoto.com/id/1389348844/photo/studio-shot-of-a-beautiful-young-woman-smiling-while-standing-against-a-grey-background.jpg?s=612x612&w=0&k=20&c=anRTfD_CkOxRdyFtvsiPopOluzKbhBNEQdh4okZImQc='  style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                </Tooltip>
+              ))
+             }
+                
                 </Avatar.Group>
             </div>
             <div>
-            <Button type='primary' onClick={addTaskModal}>+ Add Task</Button>
+              {
+                role === 'Admin' && <Button type='primary' onClick={addTaskModal}>+ Add Task</Button>
+              }
+            
                 
 
                 <Popover  content={content} title="" trigger="click" > 
-                    <Avatar src='https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg' alt='profile' size="large" icon={<UserOutlined />} style={{cursor:'pointer', marginLeft: 20}} />
+                    <Avatar src={user.photoURL} alt='profile' size="large" icon={<UserOutlined />} style={{cursor:'pointer', marginLeft: 20}} />
                 </Popover>
             </div>
              

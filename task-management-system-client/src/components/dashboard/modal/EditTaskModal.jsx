@@ -8,13 +8,17 @@ import { useUpdateTaskMutation } from "../../../redux/admin/adminApi";
 import { useGetSingleTasksQuery } from "../../../redux/task/taskApi";
 import { UserOutlined } from '@ant-design/icons';
 import { useGetAllUsersQuery } from "../../../redux/auth/authApi";
+import useAuth from "../../../hooks/useAuth";
 
 
 const { Title } = Typography;
 const EditTaskModal = ({open, onOk, onCancel, id}) => {
+    const {user} = useAuth()
     const { data: userData } = useGetAllUsersQuery(undefined);
   
-    const authOptions = userData?.data?.map((member) => ({
+    const filterAuth = userData?.data?.filter(member => member.email != user.email );
+
+    const authOptions = filterAuth?.map((member) => ({
         value: member?._id?.toLowerCase(),
         label: <><Avatar src={member?.authImgUrl} size={40} icon={<UserOutlined />} />  {member?.authName}</>
       }));

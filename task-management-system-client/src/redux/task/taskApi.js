@@ -96,6 +96,31 @@ const taskApi = baseApi.injectEndpoints({
         }
     }
     }),
+    getEmailQueryTasks: builder.query({
+      query: (email) => ({
+        url: `/tasks?email=${email}`,
+        method: "GET",
+      }),
+      providesTags: ["Tasks"],
+      async onCacheEntryAdded(_, { updateCachedData, cacheDataLoaded, cacheEntryRemoved, dispatch }) {
+        try {
+            await cacheDataLoaded;
+    
+            const handleTaskUpdate = () => {
+                dispatch(taskApi.util.invalidateTags(["Tasks"])); // Force a refetch on update
+            };
+    
+            if (!socket.hasListeners("taskUpdated")) {  // Prevent duplicate listeners
+                socket.on("taskUpdated", handleTaskUpdate);
+            }
+    
+            await cacheEntryRemoved;
+            socket.off("taskUpdated", handleTaskUpdate);
+        } catch (error) {
+            console.error("WebSocket error:", error);
+        }
+    }
+    }),
     getSingleTasks: builder.query({
       query: (id) => ({
         url: `/tasks/${id}`,
@@ -106,7 +131,7 @@ const taskApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllTasksQuery, useGetSingleTasksQuery, useGetAllQueryTasksQuery } = taskApi;
+export const { useGetAllTasksQuery, useGetSingleTasksQuery, useGetAllQueryTasksQuery, useGetEmailQueryTasksQuery } = taskApi;
 
 
 

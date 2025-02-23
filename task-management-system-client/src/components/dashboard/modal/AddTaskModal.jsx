@@ -7,14 +7,18 @@ import TaskTextArea from '../form/TaskTextArea';
 import TaskSelect from '../form/TaskSelect';
 import { useGetAllUsersQuery } from '../../../redux/auth/authApi';
 import { UserOutlined } from '@ant-design/icons';
+import useAuth from '../../../hooks/useAuth';
 
 const { Title } = Typography;
 const AddTaskModal = ({open, onOk, onCancel}) => {
+    const {user} = useAuth()
 
    
     const { data: userData, isLoading } = useGetAllUsersQuery(undefined);
+
+    const filterAuth = userData?.data?.filter(member => member.email != user.email );
   
-    const authOptions = userData?.data?.map((member) => ({
+    const authOptions = filterAuth?.map((member) => ({
         value: member?._id?.toLowerCase(),
         label: <><Avatar src={member?.authImgUrl} size={40} icon={<UserOutlined />} />  {member?.authName}</>
       }));

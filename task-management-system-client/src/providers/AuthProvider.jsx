@@ -44,17 +44,19 @@ const AuthProvider = ({children}) => {
    
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-        // console.log('CurrentUser-->', currentUser?.email)
+        console.log('CurrentUser-->', currentUser?.email)
   
         if (currentUser?.email) {
           setUser(currentUser)
-
+console.log(currentUser)
           const token = JSON.parse(localStorage.getItem('TaskManagementSystemToken'))
 
           if(token){
             const verifyUser = verifyToken(token);
-            console.log('Verifying', verifyUser)
-            setRole(token.role)
+            
+            if(verifyUser?.email === currentUser?.email){
+              setRole(verifyUser.role)
+            }
             
           }else{
         
@@ -68,18 +70,17 @@ const AuthProvider = ({children}) => {
             { withCredentials: true }
           )
 
-          console.log(response)
-
-          setRole(response.data.data.tokenData.role)
-          
-    
-          await setTokenIntoLocalStorage(response.data.data.tokenData)
-          
+          const verifyUser = verifyToken(response.data.data.tokenData.token);
+            
+            if(verifyUser?.email === currentUser?.email){
+              setRole(verifyUser.role)
+              await setTokenIntoLocalStorage(response.data.data.tokenData.token)
+            }
           
           }  
         }
          else {
-          setUser(currentUser)
+          setUser(null)
         
           setRole(null);
           localStorage.removeItem('ParcelManagementSystemToken');
