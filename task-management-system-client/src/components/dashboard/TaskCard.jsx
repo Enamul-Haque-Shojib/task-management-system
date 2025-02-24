@@ -227,7 +227,7 @@ const TaskCard = ({ task }) => {
     <ExpandOutlined  onClick={() => setIsDetailsTaskModalOpen(true)} />
     </Tooltip>,
     <Tooltip title="Edit" key="edit">
-    <Button onClick={() => setIsEditTaskModalOpen(true)} type="text"><EditOutlined /></Button>
+    <Button disabled={category==='Done'} onClick={() => setIsEditTaskModalOpen(true)} type="text"><EditOutlined /></Button>
     </Tooltip>,
     <Tooltip title="Delete" key="delete">
     <Popconfirm
@@ -239,7 +239,7 @@ const TaskCard = ({ task }) => {
       cancelText="No"
       icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
     >
-      <Button type="text" danger><DeleteOutlined /></Button>
+      <Button disabled={category==='In Progress'} type="text" danger><DeleteOutlined /></Button>
     </Popconfirm>
     </Tooltip>
   ] : role === "User" ? [
