@@ -19,6 +19,11 @@ router.patch(
   AuthControllers.updateAuth,
 );
 router.get(
+  '/one-auth/:email',
+
+  AuthControllers.getAllAuths,
+);
+router.get(
   '/',
 
   AuthControllers.getAllAuths,

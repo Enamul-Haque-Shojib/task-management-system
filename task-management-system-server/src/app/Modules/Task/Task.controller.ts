@@ -58,10 +58,22 @@ const deleteSingleTask = catchAsync(async (req, res) => {
   });
 });
 
+const dashboardStatistics = catchAsync(async (req, res) => {
+  const result = await TaskServices.dashboardStatisticsFromDB();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'successfully calculated for dashboard statistics',
+    data: result,
+  });
+});
+
 export const TaskControllers = {
   createTask,
   updateTask,
   getAllTasks,
   deleteSingleTask,
   getSingleTask,
+  dashboardStatistics
 };

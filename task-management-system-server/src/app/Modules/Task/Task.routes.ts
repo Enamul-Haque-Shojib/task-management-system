@@ -59,8 +59,14 @@ router.get(
   '/',
   TaskControllers.getAllTasks,
 );
-router.get('/:id', TaskControllers.getSingleTask);
+router.get('/one-task/:id', TaskControllers.getSingleTask);
 router.delete('/delete-task/:id', TaskControllers.deleteSingleTask);
+
+router.get(
+  '/dashboard-auth',
+
+  TaskControllers.dashboardStatistics,
+);
 
 export const TaskRoutes = router;
 

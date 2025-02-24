@@ -11,6 +11,7 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import config from '../../config';
 
 const authAccountIntoDB = async (email: string, payload: TAuth) => {
+  
   const auth = await AuthModel.isAuthExistByEmail(email);
 
   if (auth) {
@@ -29,6 +30,14 @@ const updateAuthIntoDB = async (id: string, payload: Partial<TAuth>) => {
   }
   return updateAuthInfo;
 };
+
+const getSingleAuthFromDB = async (email:string) => {
+ 
+  const result = await AuthModel.findOne({ email: email})
+
+  return result;
+};
+
 const getAllAuthsFromDB = async (query: Record<string, unknown>) => {
   const authQuery = new QueryBuilder(AuthModel.find(), query)
     .search(authSearchableField)
@@ -79,7 +88,7 @@ export const AuthServices = {
   updateAuthIntoDB,
   getAllAuthsFromDB,
   deleteAuthFromDB,
-
+  getSingleAuthFromDB,
   createJwtToken,
 
 };

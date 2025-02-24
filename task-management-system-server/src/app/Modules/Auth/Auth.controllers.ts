@@ -3,6 +3,7 @@ import sendResponse from '../../utils/sendResponse';
 import { AuthServices } from './Auth.services';
 
 const authAccount = catchAsync(async (req, res) => {
+  
   const authData = await AuthServices.authAccountIntoDB(
     req.params.email,
     req.body,
@@ -32,6 +33,15 @@ const updateAuth = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleAuth = catchAsync(async (req, res) => {
+  const result = await AuthServices.getSingleAuthFromDB(req.params.email);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Auth retrieved successfully',
+    data: result,
+  });
+});
 const getAllAuths = catchAsync(async (req, res) => {
   const result = await AuthServices.getAllAuthsFromDB(req.query);
   sendResponse(res, {
@@ -70,7 +80,7 @@ export const AuthControllers = {
   authAccount,
   updateAuth,
   getAllAuths,
-
+  getSingleAuth,
   deleteSingleAuth,
 
   jwtToken,
