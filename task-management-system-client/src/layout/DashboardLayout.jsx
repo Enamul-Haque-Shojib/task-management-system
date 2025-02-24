@@ -41,7 +41,7 @@ const DashboardLayout = () => {
             textAlign: 'center',
           }}
         >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          Task Management System ©{new Date().getFullYear()}
         </Footer>
       </Layout>
     </Layout>

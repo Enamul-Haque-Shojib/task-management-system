@@ -23,9 +23,9 @@ const {data:staticsTask, isLoading} = useStaticsTasksQuery();
       <Col xs={24} sm={12} md={8}>
         <Card>
           <Row align="middle">
-            <Avatar size={64} src={user?.photoURL} />
+            <Avatar size={80} src={user?.photoURL} />
             <Col style={{ marginLeft: 16 }}>
-              <Title level={4}>{user?.displayName}</Title>
+              <Title type="secondary" level={3}>{user?.displayName}</Title>
               <Text type="secondary">{user?.email}</Text>
               <br />
               <Text type="secondary">Role: {role}</Text>
@@ -37,7 +37,7 @@ const {data:staticsTask, isLoading} = useStaticsTasksQuery();
       {/* Pie Chart */}
       <Col xs={24} sm={12} md={16}>
         <Card>
-        <Chart options={pieChartOptions} series={pieChartSeries} type="pie" height={250} />
+        <Chart options={pieChartOptions} series={pieChartSeries} type="pie" height={230} />
         </Card>
       </Col>
 
@@ -47,16 +47,16 @@ const {data:staticsTask, isLoading} = useStaticsTasksQuery();
           <Row justify="space-around" gutter={[16, 16]}>
        
               <Col span={6} style={{ textAlign: "center" }}>
-                <Title level={3}>{staticsTask?.data?.Todo||0}</Title>
-                <Text>To Do</Text>
+                <Title type="secondary" level={3}>{staticsTask?.data?.Todo||0}</Title>
+                <Text style={{fontWeight: 'bold', fontSize:15}} type="secondary">To Do</Text>
               </Col>
               <Col span={6} style={{ textAlign: "center" }}>
-                <Title level={3}>{staticsTask?.data?.inProgress||0}</Title>
-                <Text>In Progress</Text>
+                <Title type="secondary" level={3}>{staticsTask?.data?.inProgress||0}</Title>
+                <Text style={{fontWeight: 'bold', fontSize:15}} type="secondary">In Progress</Text>
               </Col>
               <Col span={6} style={{ textAlign: "center" }}>
-                <Title level={3}>{staticsTask?.data?.complete||0}</Title>
-                <Text>Complete</Text>
+                <Title type="secondary" level={3}>{staticsTask?.data?.complete||0}</Title>
+                <Text style={{fontWeight: 'bold', fontSize:15, }} type="secondary">Complete</Text>
               </Col>
           
           </Row>
