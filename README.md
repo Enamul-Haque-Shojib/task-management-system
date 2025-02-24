@@ -29,6 +29,7 @@ There are two type roles, Admin and User. Admin can CRUD operation on tasks and 
 - react-countup,
 - socket.io-client
 - Redux RTK toolkit query
+- React hook form
 
 ### Backend:
 
