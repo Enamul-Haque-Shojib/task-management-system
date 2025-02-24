@@ -28,7 +28,7 @@ There are two type roles, Admin and User. Admin can CRUD operation on tasks and 
 - apex chart,
 - react-countup,
 - socket.io-client
-- Redux
+- Redux RTK toolkit query
 
 ### Backend:
 
