@@ -7,7 +7,7 @@ const imageUploadApi = imageUploadBaseApi.injectEndpoints({
     endpoints: (builder) => ({
         imageUpload: builder.mutation({
             query: (imageData) => ({
-                url: `/dqsm6ybdu/image/upload`,
+                url: import.meta.env.VITE_ClOUDINARY_API_KEY,
                 method: 'POST',
                 body: imageData
             })

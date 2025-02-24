@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, message, Typography, Upload } from "antd";
+import { Button, Form, Image, Input, message, Typography, Upload } from "antd";
 import TaskForm from "../../components/dashboard/form/TaskForm";
 import TaskInput from "../../components/dashboard/form/TaskInput";
 import { useNavigate, Navigate, useLocation, Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useImageUploadMutation } from "../../redux/imageUpload/imageUploadApi";
 import { setTokenIntoLocalStorage } from "../../utils/utils";
 import { PlusOutlined } from '@ant-design/icons';
 import useAuth from "../../hooks/useAuth";
+import regImg from "../../assets/reg.jpg";
 
 const { Title } = Typography;
 
@@ -82,7 +83,10 @@ const Register = () => {
     return (
         <div>
             <Title level={2} style={{ textAlign: 'center' }}>Sign UP</Title>
-            <div></div>
+           <div style={{display: 'flex'}}>
+           <div>
+            <Image src={regImg} alt="register"></Image>
+           </div>
             <div>
             <TaskForm onSubmit={onSubmit} defaultValues={defaultValues}>
          
@@ -123,6 +127,7 @@ const Register = () => {
               Sign Up with Google
             </Button>
             </div>
+           </div>
         </div>
     );
 };
