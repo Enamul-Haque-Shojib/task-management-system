@@ -82,21 +82,21 @@ const dashboardStatisticsFromDB = async () => {
     const taskData = await TaskModel.find(); 
 
   
-    let Todo = 0;
-    let inProgress = 0;
+    let todo = 0;
+    let inprogress = 0;
     let complete = 0;
     taskData.forEach((task) => {
       if(task.category === 'To Do'){
-        Todo ++;
+        todo ++;
       }else if(task.category === 'In Progress'){
-        inProgress++;
+        inprogress++;
       }else if(task.category === 'Done'){
         complete ++;
       }
     })
   
 
-    return {Todo, inProgress, complete}
+    return {todo, inprogress, complete}
 
 };
 
