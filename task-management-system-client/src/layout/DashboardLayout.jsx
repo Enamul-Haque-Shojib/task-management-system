@@ -23,6 +23,7 @@ const DashboardLayout = () => {
           style={{
             margin: '24px 16px 0',
             overflow: 'initial',
+            minHeight: '100vh'
           }}
         >
           <div

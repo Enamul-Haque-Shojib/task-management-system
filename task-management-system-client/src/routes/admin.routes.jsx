@@ -5,12 +5,7 @@ import DoneTasks from "../pages/admin/DoneTasks";
 import InProgressTasks from "../pages/admin/InProgressTasks";
 import TeamMember from "../pages/admin/TeamMember";
 import ToDoTasks from "../pages/admin/ToDoTasks";
-// import AllOrders from "../pages/admin/manageOrders/AllOrders";
 
-// import AddProducts from "../pages/admin/manageProducts/AddProducts";
-// import AllProducts from "../pages/admin/manageProducts/AllProducts";
-// import UpdateProducts from "../pages/admin/manageProducts/UpdateProducts";
-// import AllUsers from "../pages/admin/manageUsers/allUsers/AllUsers";
 
 
 

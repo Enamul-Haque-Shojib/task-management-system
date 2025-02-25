@@ -68,9 +68,9 @@ const navigate = useNavigate();
             display: 'flex',
             justifyContent: 'end',
             alignItems: 'center',
-            position: 'sticky',
-            top: 0,
-            zIndex: 1,
+            // position: 'sticky',
+            // top: 0,
+            // zIndex: 1,
             // width: '100%',
           }}
         >

@@ -4,12 +4,7 @@ import { adminPaths } from '../../routes/admin.routes';
 import { userPaths } from '../../routes/user.routes';
 import sidebarItemsGenerator from '../../utils/sidebarItemsGenerator';
 import useAuth from '../../hooks/useAuth';
-// import { sidebarItemsGenerator } from '../../utils/sidebarItemsGenerator';
-// import { adminPaths } from '../../routes/admin.routes';
-// import { userPaths } from '../../routes/user.routes';
-// import { useAppSelector } from '../../redux/hooks';
-// import { currentToken, TAuth } from '../../redux/features/auth/authSlice';
-// import { verifyToken } from '../../utils/verifyToken';
+
 
 
 
@@ -24,17 +19,18 @@ const userRole = {
 };
 
 
-const siderStyle = {
-  overflow: 'auto',
-  height: '100vh',
-  position: 'sticky',
-  insetInlineStart: 0,
-  top: 0,
-  bottom: 0,
-  scrollbarWidth: 'thin',
-  scrollbarGutter: 'stable',
+// const siderStyle = {
+//   overflow: 'auto',
+//   height: '100vh',
+//   position: 'sticky',
+//   insetInlineStart: 0,
+//   left: 0,
+//   top: 0,
+//   bottom: 0,
+//   scrollbarWidth: 'thin',
+//   scrollbarGutter: 'stable',
   
-};
+// };
 
 const Sidebar = () => {
     const {role} = useAuth()
@@ -55,7 +51,7 @@ const Sidebar = () => {
     }
     return (
         <Sider
-        style={siderStyle}
+        // style={siderStyle}
          breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {

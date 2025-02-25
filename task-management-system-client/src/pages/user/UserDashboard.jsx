@@ -1,5 +1,5 @@
 
-import { Card, Avatar, Typography, Row, Col } from "antd";
+import { Card, Avatar, Typography, Row, Col, Spin } from "antd";
 import Chart from "react-apexcharts";
 import useAuth from "../../hooks/useAuth";
 import { useStaticsTasksQuery } from "../../redux/task/taskApi";
@@ -14,74 +14,58 @@ const UserDashboard = () => {
 
   const pieChartOptions = {
     labels: ["To Do", "In Progress", "Complete"],
+    legend: { position: "bottom" },
   };
   const pieChartSeries = [
-    staticsTask?.data?.Todo || 0,
-    staticsTask?.data?.inProgress || 0,
+    staticsTask?.data?.todo || 0,
+    staticsTask?.data?.inprogress || 0,
     staticsTask?.data?.complete || 0,
   ];
 
   return (
-    <Row gutter={[16, 16]} style={{ padding: 24 }}>
-      {/* Profile Section */}
-      <Col xs={24} sm={12} md={8}>
-        <Card>
-          <Row align="middle">
-            <Avatar size={80} src={user?.photoURL} />
-            <Col style={{ marginLeft: 16 }}>
-              <Title type="secondary" level={3}>
-                {user?.displayName}
-              </Title>
-              <Text type="secondary">{user?.email}</Text>
-              <br />
-              <Text type="secondary">Role: {role}</Text>
-            </Col>
-          </Row>
+    <Row gutter={[24, 24]} style={{ padding: 24 }}>
+
+      <Col xs={24} sm={12} md={8} lg={6}>
+        <Card style={{ textAlign: "center", borderRadius: 12 }}>
+          <Avatar size={90} src={user?.photoURL} />
+          <Title level={4} style={{ marginTop: 16 }}>{user?.displayName}</Title>
+          <Text type="secondary">{user?.email}</Text>
+          <br />
+          <Text strong style={{ color: "#1890ff" }}>Role: {role}</Text>
         </Card>
       </Col>
 
-      {/* Pie Chart */}
-      <Col xs={24} sm={12} md={16}>
-        <Card>
-          <Chart
-            options={pieChartOptions}
-            series={pieChartSeries}
-            type="pie"
-            height={230}
-          />
+     
+      <Col xs={24} sm={12} md={16} lg={18}>
+        <Card style={{ borderRadius: 12 }}>
+          {isLoading ? (
+            <Spin size="large" style={{ display: "block", margin: "auto" }} />
+          ) : (
+            <Chart options={pieChartOptions} series={pieChartSeries} type="pie" height={250} />
+          )}
         </Card>
       </Col>
 
-      {/* Summary Cards with CountUp */}
+
       <Col xs={24}>
-        <Card>
-          <Row justify="space-around" gutter={[16, 16]}>
-            <Col span={6} style={{ textAlign: "center" }}>
-              <Title type="secondary" level={3}>
-                <CountUp end={staticsTask?.data?.Todo || 0} duration={2} />
-              </Title>
-              <Text style={{ fontWeight: "bold", fontSize: 15 }} type="secondary">
-                To Do
-              </Text>
+        <Row gutter={[16, 16]} justify="center">
+          {["Todo", "In Progress", "Complete"].map((status, index) => (
+            <Col key={index} xs={24} sm={12} md={8}>
+              <Card
+                style={{
+                  textAlign: "center",
+                  borderRadius: 12,
+                  backgroundColor: ["#ffcccb", "#ffff99", "#d4edda"][index],
+                }}
+              >
+                <Title level={3}>
+                  <CountUp end={staticsTask?.data?.[status.replace(" ", "").toLowerCase()] || 0} duration={2} />
+                </Title>
+                <Text strong>{status}</Text>
+              </Card>
             </Col>
-            <Col span={6} style={{ textAlign: "center" }}>
-              <Title type="secondary" level={3}>
-                <CountUp end={staticsTask?.data?.inProgress || 0} duration={2} />
-              </Title>
-              <Text style={{ fontWeight: "bold", fontSize: 15 }} type="secondary">
-                In Progress
-              </Text>
-            </Col>
-            <Col span={6} style={{ textAlign: "center" }}>
-              <Title type="secondary" level={3}>
-                <CountUp end={staticsTask?.data?.complete || 0} duration={2} />
-              </Title>
-              <Text style={{ fontWeight: "bold", fontSize: 15 }} type="secondary">
-                Complete
-              </Text>
-            </Col>
-          </Row>
-        </Card>
+          ))}
+        </Row>
       </Col>
     </Row>
   );

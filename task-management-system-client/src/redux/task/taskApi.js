@@ -1,37 +1,3 @@
-// import { baseApi } from "../api/baseApi";
-
-
-
-// const taskApi = baseApi.injectEndpoints({
-//     endpoints: (builder) => ({
-//         getAllTasks: builder.query({
-//             query: () => ({
-//                 url: '/tasks',
-//                 method: 'GET'
-//             }),
-//             providesTags:['Tasks']
-//         }),
-//         getAllQueryTasks: builder.mutation({
-//             query: (category) => ({
-//                 url: `/tasks?category=${category}`,
-//                 method: 'GET'
-//             }),
-//             invalidatesTags:['Tasks']
-//         }),
-//         getSingleTasks: builder.query({
-//             query: (id) => ({
-//                 url: `/tasks/${id}`,
-//                 method: 'GET'
-//             }),
-//             providesTags:['Tasks']
-//         }),
-     
-//     })
-// })
-
-// export const { useGetAllTasksQuery,  useGetSingleTasksQuery, useGetAllQueryTasksMutation} = taskApi;
-
-
 
 
 import { baseApi } from "../api/baseApi";

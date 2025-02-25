@@ -2,7 +2,8 @@
 import AllTasks from "../pages/admin/AllTasks";
 import TeamMember from "../pages/admin/TeamMember";
 import MyTasks from "../pages/user/MyTasks";
-import UserDashboard from "../pages/user/userDashboard";
+import UserDashboard from "../pages/user/UserDashboard";
+
 
 export const userPaths = [
     {
