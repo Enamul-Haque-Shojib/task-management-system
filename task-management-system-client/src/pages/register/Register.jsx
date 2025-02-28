@@ -75,7 +75,7 @@ const Register = () => {
       const { displayName, email, photoURL } = response.user;
 
       const userInfo = { authName: displayName, email, authImgUrl: photoURL, role: roleSignUp };
-      console.log(userInfo);
+      
       const tokenData = await register({ userInfo, email: userInfo.email }).unwrap();
       await setTokenIntoLocalStorage(tokenData?.data?.tokenData?.token);
 

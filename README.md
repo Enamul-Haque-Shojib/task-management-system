@@ -14,6 +14,8 @@ There are two type roles, Admin and User. Admin can CRUD operation on tasks and 
 ## Features:
 
 - Authentication system, Admin and User
+- In the register, user must select the role as Admin or User for sign up in the manual or social google both
+- If anyone try to sign up in the login page by social google, he or she will be registered as a User
 - Routes are private, User should register
 - Admin can be only one and user can be multiple
 - Admin can create, update,and delete the task
